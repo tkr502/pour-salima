@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Question importante...</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffe6f2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            touch-action: none; /* Empêche le défilement pendant qu'on essaie de cliquer */
+        }
+
+        #btn-oui {
+            background-color: #4CAF50;
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-fuyant {
+            background-color: #ff4d4d;
+            color: white;
+            position: absolute;
+            white-space: nowrap;
+        }
+
+        #btn-peut-etre {
+            background-color: #ff9800;
+        }
+
+        #success-msg {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        img {
+            width: 80%;
+            max-width: 300px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-content">
+        <h1>Veux-tu m'épouser Salima ?</h1>
+        
+        <div class="container">
+            <button id="btn-oui">OUI !</button>
+            <button id="btn-peut-etre" class="btn-fuyant" style="top: 100px; left: 50%; transform: translateX(-50%);">Peut-être</button>
+            <button id="btn-non" class="btn-fuyant" style="top: 180px; left: 50%; transform: translateX(-50%);">Non</button>
+        </div>
+    </div>
+
+    <div id="success-msg">
+        <h1>YEEESSSS ! ❤️</h1>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3R6Zzh3Ynd3Z3R6Zzh3Ynd3Z3R6Zzh3Ynd3Z3R6Zzh3Ynd3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/lJL0itM8pYp4fXzJ4F/giphy.gif" alt="Success GIF">
+        <p>Prépare la robe, j'arrive !</p>
+    </div>
+
+    <script>
+        const buttons = document.querySelectorAll('.btn-fuyant');
+        const ouiBtn = document.getElementById('btn-oui');
+        const successMsg = document.getElementById('success-msg');
+
+        function moveButton(btn) {
+            // Calculer des positions aléatoires dans l'écran
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            
+            btn.style.left = `${x}px`;
+            btn.style.top = `${y}px`;
+            btn.style.transform = 'none';
+        }
+
+        // Pour mobile (iPhone 15) et Desktop
+        buttons.forEach(btn => {
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                moveButton(btn);
+            });
+            btn.addEventListener('mouseover', () => moveButton(btn));
+        });
+
+        ouiBtn.addEventListener('click', () => {
+            successMsg.style.display = 'flex';
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        });
+    </script>
+</body>
+</html>
